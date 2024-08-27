@@ -98,7 +98,7 @@ class OQOValidator:
 
     def _validate_summarize_by(self, summarize_by):
         if summarize_by not in self.ENTITIES_CONFIG.keys() and summarize_by != 'all':
-            return False, f'works.{summarize_by} not a valid summary column'
+            return False, f'{summarize_by} is not a valid entity'
         return True, None
 
     def validate(self, oqo):
