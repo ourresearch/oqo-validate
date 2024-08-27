@@ -1,3 +1,21 @@
+Installation:
+
+```
+pip install git+https://github.com/ourresearch/oqo-validate
+```
+
+Update:
+
+```
+pip install -U git+https://github.com/ourresearch/oqo-validate
+```
+
+Uninstall:
+
+```
+pip uninstall oqo-validate
+```
+
 Example usage:
 
 ```
