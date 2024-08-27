@@ -3,8 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='oqo-validate',
     version='1.0',
-    packages=find_packages(),
-    install_requires=['requests'],
+    packages=['oqo_validate'],
     url='',
     license='',
     author='nolanmccafferty',
