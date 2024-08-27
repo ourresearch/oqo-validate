@@ -101,7 +101,7 @@ class OQOValidator:
             return False, f'works.{summarize_by} not a valid summary column'
         return True, None
 
-    def validate_oqo(self, oqo):
+    def validate(self, oqo):
         for _filter in oqo.get('filters', []):
             ok, error = self._validate_filter(_filter)
             if not ok:
