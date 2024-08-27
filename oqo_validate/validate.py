@@ -102,23 +102,26 @@ class OQOValidator:
         return True, None
 
     def validate(self, oqo):
-        for _filter in oqo.get('filters', []):
-            ok, error = self._validate_filter(_filter)
-            if not ok:
-                return False, error
-        summarize_by_entity = oqo.get('summarize_by')
-        if summarize_by_entity:
-            ok, error = self._validate_summarize_by(summarize_by_entity)
-            if not ok:
-                return False, error
-        if return_cols := oqo.get('return_columns', []):
-            ok, error = self._validate_return_columns(return_cols,
-                                                      summarize_by_entity or 'works')
-            if not ok:
-                return False, error
-        if sort_by := oqo.get('sort_by'):
-            ok, error = self._validate_sort_by(sort_by,
-                                               summarize_by_entity or 'works')
-            if not ok:
-                return False, error
-        return True, None
+        try:
+            for _filter in oqo.get('filters', []):
+                ok, error = self._validate_filter(_filter)
+                if not ok:
+                    return False, error
+            summarize_by_entity = oqo.get('summarize_by')
+            if summarize_by_entity:
+                ok, error = self._validate_summarize_by(summarize_by_entity)
+                if not ok:
+                    return False, error
+            if return_cols := oqo.get('return_columns', []):
+                ok, error = self._validate_return_columns(return_cols,
+                                                          summarize_by_entity or 'works')
+                if not ok:
+                    return False, error
+            if sort_by := oqo.get('sort_by'):
+                ok, error = self._validate_sort_by(sort_by,
+                                                   summarize_by_entity or 'works')
+                if not ok:
+                    return False, error
+            return True, None
+        except Exception as e:
+            return False, str(e)
