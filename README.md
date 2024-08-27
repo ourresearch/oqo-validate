@@ -4,6 +4,11 @@ Installation:
 pip install git+https://github.com/ourresearch/oqo-validate
 ```
 
+Add line to requirements.txt:
+```
+git+https://github.com/ourresearch/oqo-validate
+```
+
 Update:
 
 ```
@@ -16,7 +21,11 @@ Uninstall:
 pip uninstall oqo-validate
 ```
 
-Example usage:
+Example usages:
+```
+from oqo_validate.validate import validate_oqo
+ok, error = validate_oqo(query)
+```
 
 ```
 from oqo_validate.validate import validate_oqo
