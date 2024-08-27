@@ -23,12 +23,22 @@ pip uninstall oqo-validate
 
 Example usages:
 ```
-from oqo_validate.validate import validate_oqo
-ok, error = validate_oqo(query)
+from oqo_validate import OQOValidator
+validator = OQOValidator()
+ok, error = validator.validate(query)
 ```
 
 ```
-from oqo_validate.validate import validate_oqo
+# Get config from somewhere else
+from combined_config import all_entities_config
+from oqo_validate import OQOValidator
+validator = OQOValidator(all_entities_config)
+ok, error = validator.validate(query)
+```
+
+```
+from oqo_validate import OQOValidator
+validator = OQOValidator()
 from oqo_validate.modifiers import prune_empty_branches
 
 >>> query = {
@@ -59,9 +69,9 @@ from oqo_validate.modifiers import prune_empty_branches
     "last_known_institutions.id"
   ]
 }
->>> validate_oqo(query)
+>>> validator.validate(query)
 (False, 'Branch br_2SeSEo has empty children')
 >>> query['filters'] = prune_empty_branches(query['filters'])
->>> validate_oqo(query)
+>>> validator.validate(query)
 (True, None)
 ```
