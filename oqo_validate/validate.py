@@ -6,7 +6,7 @@ import requests
 class OQOValidator:
     BRANCH_OPERATORS = {'and', 'or'}
     LEAF_OPERATORS = {'is', 'is not', 'contains', 'does not contain',
-                      'is greater than', 'is less than', '>', '<'}
+                      'is greater than', 'is less than', '>', '<', 'is in', 'is not in'}
     FILTER_TYPES = {'branch', 'leaf'}
 
     def __init__(self, config: Optional[Dict] = None):
