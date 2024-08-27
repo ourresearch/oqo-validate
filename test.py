@@ -1,6 +1,6 @@
 import requests
 
-from validate import validate_oqo
+from oqo_validate.validate import validate_oqo
 
 r = requests.get(
     'https://raw.githubusercontent.com/ourresearch/oqo-search-tests/main/tests.json')
