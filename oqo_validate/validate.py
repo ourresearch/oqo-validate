@@ -61,7 +61,7 @@ class OQOValidator:
             value = leaf_filter[
                 'value'] if obj_entity != 'countries' else self._formatted_country_value(
                 leaf_filter['value'])
-            if possible_values and value not in possible_values:
+            if possible_values and self._safe_lower(value) not in possible_values:
                 return False, f'{leaf_filter["value"]} not a valid value for {obj_entity}'
         return True, None
 
@@ -101,27 +101,32 @@ class OQOValidator:
             return False, f'{summarize_by} is not a valid entity'
         return True, None
 
-    def validate(self, oqo):
-        try:
-            for _filter in oqo.get('filters', []):
-                ok, error = self._validate_filter(_filter)
-                if not ok:
-                    return False, error
-            summarize_by_entity = oqo.get('summarize_by')
-            if summarize_by_entity:
-                ok, error = self._validate_summarize_by(summarize_by_entity)
-                if not ok:
-                    return False, error
-            if return_cols := oqo.get('return_columns', []):
-                ok, error = self._validate_return_columns(return_cols,
-                                                          summarize_by_entity or 'works')
-                if not ok:
-                    return False, error
-            if sort_by := oqo.get('sort_by'):
-                ok, error = self._validate_sort_by(sort_by,
-                                                   summarize_by_entity or 'works')
-                if not ok:
-                    return False, error
-            return True, None
-        except Exception as e:
-            return False, str(e)
+    def _validate(self, oqo):
+        for _filter in oqo.get('filters', []):
+            ok, error = self._validate_filter(_filter)
+            if not ok:
+                return False, error
+        summarize_by_entity = oqo.get('summarize_by')
+        if summarize_by_entity:
+            ok, error = self._validate_summarize_by(summarize_by_entity)
+            if not ok:
+                return False, error
+        if return_cols := oqo.get('return_columns', []):
+            ok, error = self._validate_return_columns(return_cols,
+                                                      summarize_by_entity or 'works')
+            if not ok:
+                return False, error
+        if sort_by := oqo.get('sort_by'):
+            ok, error = self._validate_sort_by(sort_by,
+                                               summarize_by_entity or 'works')
+            if not ok:
+                return False, error
+        return True, None
+
+    def validate(self, oqo, return_exc=False):
+        if return_exc:
+            try:
+                return self._validate(oqo)
+            except Exception as e:
+                return False, str(e)
+        return self._validate(oqo)
