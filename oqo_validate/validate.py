@@ -89,10 +89,10 @@ class OQOValidator:
         return self._validate_leaf(filter_node, get_rows_entity, origin)
         # return False, f'{filter_node.get("type")} not a valid filter type'
 
-    def _validate_sort_by_column(self, sort_by, entity='works'):
-        col = self._get_entity_column(entity, sort_by['column_id'])
+    def _validate_sort_by_column(self, sort_by_column, entity='works'):
+        col = self._get_entity_column(entity, sort_by_column)
         if not col:
-            return False, f'{entity}.{sort_by["column_id"]} not a valid sort column'
+            return False, f'{entity}.{sort_by_column} not a valid sort column'
         return True, None
 
     @staticmethod
@@ -118,7 +118,7 @@ class OQOValidator:
         if not ok:
             return False, err
         for _filter in oqo.get('filter_works', []):
-            ok, error = self._validate_filter(_filter, oqo.get('get_rows'), 'filter_works')
+            ok, error = self._validate_filter(_filter, 'works', 'filter_works')
             if not ok:
                 return False, error
 
